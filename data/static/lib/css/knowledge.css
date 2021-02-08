@@ -384,4 +384,56 @@ div#content {
     background-color: #ccc;
 }
 
+/* 红外图谱的css */
+
+.infrared-svg {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.infr-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+div#enlarge {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 999;
+}
+
+#close {
+    margin-left: 20px;
+}
+
+div#operation {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    /* background: #286090; */
+    bottom: 10%;
+    left: 50%;
+    margin-left: -100px;
+    text-align: center;
+}
+.thum-image {
+    width: 200px;
+    height: 150px;
+    cursor: pointer;
+    margin: 20px 0 0 10px;
+}
+
+.thum-title {
+    margin: 10px 0 0 10px;
+    text-align: center;
+}
+div#thum-info ul {
+    list-style: none;
+    display: inline-block;
+}
 

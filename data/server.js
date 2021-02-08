@@ -288,6 +288,21 @@ app.get('/priviewPdf', (req, res) => {
 app.get('/priviewVideo', (req, res) => {
     getFileContent.priviewVideo(req, res);
 })
+
+// 红外图谱的 数据接口  /infrared
+app.get('/infrared', (req, res) => {
+    getFileContent.getInfrared(req, res)
+})
+app.get('/imageInfo', (req, res) => {
+    getFileContent.getImageInfo(req, res)
+})
+app.get('/downloadimage', (req, res) => {
+    getFileContent.downLoadImage(req, res)
+})
+app.get('/showImage', (req, res) => {
+    getFileContent.showImage(req, res);
+})
+
 app.listen(4000);
 
 

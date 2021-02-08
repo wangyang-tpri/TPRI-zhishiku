@@ -31,6 +31,9 @@ var titleObj = {
 }
 var titleFolder;
 function whichMethodCall(number) {
+    $('#title-dialy').css('display', 'block')
+    $('#infr-table').css('display', 'none')
+    $('#infr-thum').css('display', 'none')
     number = parseInt(number);
     switch (number) {
         case 1:
@@ -46,6 +49,8 @@ function whichMethodCall(number) {
             getOnlineTeachingInfo()
             break;
         default:
+            // 点击获取红外图谱的图片信息
+            getInfraredImage()
             break;
     }
 }
@@ -253,4 +258,27 @@ document.getElementById('login_out').addEventListener('click', function (e) {
     localStorage.setItem('userName', '');
     location.href = './index.html';
 })
+
+// 处理 红外图谱的业务逻辑
+
+
+function getInfraredImage() {
+    $('#title-dialy').css('display', 'none')
+    $('#infr-table').css('display', 'block')
+    $('#table-info').empty()
+    $('#thum-info').css('display', 'block')
+    makeTable.getInfraredInfo()
+}
+// 鼠标的滚轮可以放大图片
+// jquey本身不支持mousewheel事件  需要添加mousewheel插件 才可用 
+var iWidth, iHeight;
+var img = document.querySelector('img');
+document.getElementById('enlarge').onmousewheel = function (e) {
+    iWidth = img.width;
+    iHeight = img.height
+    e.wheelDelta < 0 ? iWidth -= 5 : iWidth += 5;
+    e.wheelDelta < 0 ? iHeight -= 5 : iHeight += 5;
+    img.style.width = iWidth + 'px'
+    img.style.height = iHeight + 'px'
+}
 

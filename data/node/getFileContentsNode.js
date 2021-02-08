@@ -5,6 +5,7 @@ const { type } = require('os');
 const { response } = require('express');
 var  CreatePool = new CreatePool();
 var  pool = CreatePool.getPool();
+var path = require('path')
 const { runInThisContext } = require('vm');
 function GetFileContents() {
     this.getFile = function (req, res) {
@@ -83,7 +84,6 @@ function GetFileContents() {
             conn.release();
         })
     }
-
     this.getFolderList = function (req, res) {
         var folderName = req.query.folder;
         var selectDirectorySql = "SELECT file_name FROM filemanagement WHERE create_floder = " + '\'' + folderName + '\'';
@@ -163,6 +163,59 @@ function GetFileContents() {
             };
             res.writeHead(200, head);
             fs.createReadStream(path).pipe(res);
+        }
+    }
+
+    this.getInfrared = (req, res) => {
+        let path = 'D:/public/红外图谱'
+        fs.readdir(path, (err, result) => {
+            if (err) throw err;
+            res.send(result)
+        })
+    }
+    this.getImageInfo = (req, res) => {
+        let imageName = req.query.imageName;
+        let imagePath = path.resolve('D:/public/红外图谱', imageName);
+        let imageArr = [];
+        fs.stat(imagePath, (err, result) => {
+            if (err) throw err;
+            result.name = imageName;
+            imageArr.push(result)
+            res.send(imageArr)
+        })
+    }
+    this.downLoadImage = (req, res) => {
+        try {
+            let imagePath = decodeURIComponent(req.query.imagepath);
+            let imageArr = imagePath.split('/');
+            let imageName = imageArr[imageArr.length - 1]
+            res.writeHead(200, {
+                'Content-type': 'image/png',
+                'Content-Disposition': 'attachment;filename=' + encodeURI(imageName)
+            })
+            let imageStream = fs.createReadStream(imagePath);
+            imageStream.on('data', (chunk) => {
+                res.write(chunk, 'binary')
+            })
+            imageStream.on('end', () => {
+                res.end()
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    this.showImage = (req, res) => {
+        let iPath = req.query.imagepath;
+        res.writeHead(200, { 'Content-Type': 'image/png' });
+        var fileStream = fs.createReadStream(iPath);
+        if (fileStream) {//判断状态
+            fileStream.on('data', (chuck) => {
+                res.write(chuck, 'binary')  //文档内容以二进制的格式的写到response的输出流
+            })
+            fileStream.on('end', () => {
+                res.end()
+            })
         }
     }
 }
