@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/css/knowledge.css">
+    <script src="lib/js/jquery-3.2.1.js"></script>
+    <script src="lib/js/weixin.js"></script>
+    <script src='./loginout.js'></script>
+</head>
+
+<body style="background-color: #bbb7bb36;">
+    <div class="container" style="width: 100%;" >
+        <div class="row h-header" >
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span class="backToIndex">知识管理分析系统</span>
+            </div>
+            <div class="col-lg-5 col-md-4 col-sm-4 col-xs-4 text-right" id="h-user">用户登录信息</div>
+            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 text-right" style="cursor: pointer;" id="login_out">退出</div>
+        </div>
+
+       <div class="row searchTop">
+            <div class="col-lg-3 col-md-3 " id="leftMenu" style="margin-top: -6px; border-radius: 5px;">
+                
+                <ul style="background-color:#3e3c3c17; border-radius: 5px; padding: 10px 20px;" id="leftItem">                    
+                    <li>日常巡检报告</li>
+                    <li>重点事件分析</li>
+                    <li>技术资料汇总</li>
+                    <li>在线视频教学</li>
+                </ul>
+            </div>
+            <div class="col-lg-9 col-md-9" style="border: 1px solid #cccccc; overflow-y: auto;">
+                <table class="table table-hover" id="titleDetails">
+                    <thead>
+                        <tr>
+                            <th>文件名称</th>
+                            <th>文件类型</th>
+                            <th class="sort" onclick="sortTable('titleDetails', this)">创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bigInfo">
+                    </tbody>
+                </table>
+            </div>
+       </div>
+    </div>
+</body>
+<script src="./dialyCheck.js"></script>
+</html>
