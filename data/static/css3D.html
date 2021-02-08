@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta http-equiv="Cache-control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <title>图片环绕功能</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            /* perspective 设定元素被查看位置的视图 */
+            /* perspective-origin: center center; */
+            background: #E3DFD3;
+            overflow: hidden;
+            perspective: 500px;
+            perspective-origin: 50% 20%;
+        }
+        
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        
+        .contant {
+            width: 900px;
+            height: 600px;
+            /* width: 100%;
+            height: 100%; */
+            margin: auto auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: mybt 20s infinite linear;
+            /* 围绕y轴旋转360度 不停的旋转 infinite  */
+        }
+        
+        @keyframes mybt {
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+        
+        .box div {
+            position: absolute;
+            width: 100px;
+            height: 110px;
+            left: 45%;
+            bottom: 50%;
+            /* transform-origin 让你更改一个元素变形的原点 设置元素旋转的基点位置 */
+            transform-origin: 60% 10%;
+            /* background-image: url( ../img/55555.jpg); */
+            background-repeat: no-repeat;
+            /* transform-style 设置元素的子元素是位于3d空间中还是平面中 */
+            transform-style: preserve-3d;
+        }
+        
+        .box div:nth-child(1) {
+            /* rotateY 函数定义了一个转换 可以让元素围绕纵坐标（垂直轴）旋转 而不会对其进行变形 */
+            /* translateZ 函数沿着z轴在三维空间中重新定位元素  */
+            /* translateZ 正值表示靠近观察者  负值表示远离观察者 */
+            /* background-position 设置背景图像的起始位置  相对于父元素的起始位置的 */
+            transform: rotateY(60deg) translateZ(300px);
+            background-position: 0px 0;
+        }
+        
+        .box div:nth-child(2) {
+            transform: rotateY(120deg) translateZ(300px);
+            background-position: -100px 0;
+        }
+        
+        .box div:nth-child(3) {
+            transform: rotateY(180deg) translateZ(300px);
+            background-position: -200px 0;
+        }
+        
+        .box div:nth-child(4) {
+            transform: rotateY(240deg) translateZ(300px);
+            background-position: -300px 0;
+        }
+        
+        .box div:nth-child(5) {
+            transform: rotateY(300deg) translateZ(300px);
+            background-position: -400px 0;
+        }
+        
+        .box div:nth-child(6) {
+            transform: rotateY(360deg) translateZ(300px);
+            background-position: -500px 0;
+        }
+        /* .box div:nth-child(7) {
+            transform: rotateY(210deg) translateZ(-300px);
+            background-position: -600px 0;
+        }
+        
+        .box div:nth-child(8) {
+            transform: rotateY(240deg) translateZ(-300px);
+            background-position: -700px 0;
+        }
+        
+        .box div:nth-child(9) {
+            transform: rotateY(270deg) translateZ(-300px);
+            background-position: -800px 0;
+        }
+        
+        .box div:nth-child(10) {
+            transform: rotateY(300deg) translateZ(-300px);
+            background-position: -900px 0;
+        }
+        
+        .box div:nth-child(11) {
+            transform: rotateY(330deg) translateZ(-300px);
+            background-position: -1000px 0;
+        }
+        
+        .box div:nth-child(12) {
+            transform: rotateY(360deg) translateZ(-300px);
+            background-position: -1100px 0;
+        } */
+        
+        .active {
+            animation-play-state: running;
+        }
+        
+        .paused {
+            animation-play-state: paused;
+        }
+        
+        .sca {
+            transform: scale(1.3);
+            
+        }
+    </style>
+</head>
+
+<body>
+</body>
+
+<!-- <div>这是一个3D环绕的动图，通过css的3d的功能实现的</div> -->
+<div class="contant">
+</div>
+<script>
+    var GetImage = (function() {
+        // 这种写法就是把所有的东西都包在了一个自动执行的函数里面(也就是闭包里面)， 对外只暴露了getImage()方法
+        // 在getImage()这个方法中调用 GetImage()构造函数中的 _init() _imgList()这两个内部方法
+        var getImage = function(option, container) {
+                this.render = function() {
+                    _init(option, container);
+                    _imgList();
+                }
+            }
+            // _init _imgList 都是GetImage的内部方法 
+            // _baseProper  是GetImage的私有属性  外部都访问不到的
+        var
+            _init = function(option, container) {
+                if (!option) {
+                    return
+                } else {
+                    option = option || _baseProper.option;
+                    _baseProper.container = container;
+                }
+                var ele = "";
+                var dd = document.createElement('div');
+                for (var key in option) {
+                    var img = document.createElement('img');
+                    img.src = option[key];
+                    ele += '<div>' + img.outerHTML + '</div>';
+                }
+                dd.setAttribute('class', 'box');
+                dd.innerHTML = ele;
+                container.appendChild(dd);
+            }
+        var _imgList = function() {
+            for (var key in _baseProper.imgList) {
+                _baseProper.imgList[key].onmouseover = function(ev) {
+                    ev.preventDefault(); // 阻止事件冒泡
+                    _baseProper.container.className += ' paused';
+                    this.setAttribute('class', 'sca');
+                }
+                _baseProper.imgList[key].onmouseleave = function(ev) {
+                    ev.preventDefault();
+                    _baseProper.container.classList.remove('paused');
+                    _baseProper.container.className += ' active';
+                    this.classList.remove('sca');
+                }
+            }
+        }
+        var _baseProper = {
+            imgList: document.getElementsByTagName('img'),
+            box: document.getElementsByClassName('box')[0],
+            container: document.getElementsByClassName('contant')[0],
+            option: []
+        }
+        return getImage;
+    })()
+    var container = document.getElementsByClassName('contant')[0];
+    var options = ["./lib/image/0038037996889031_b.jpg", "./lib/image/0038037996889031_b.jpg","./lib/image/a3abed6c6c343df84eff0d610a11593.png","./lib/image/0038037996889031_b.jpg","./lib/image/0038037996889031_b.jpg","./lib/image/0038037996889031_b.jpg"];
+    var c = new GetImage(options, container);
+    c.render();
+    setInterval(() => {
+        c.render(); 
+    }, 60 * 1000 * 60);
+</script>
+
+</html>

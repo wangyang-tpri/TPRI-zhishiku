@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="params" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>文档上传页面</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/css/knowledge.css">
+    <script src="lib/js/jquery-3.2.1.js"></script>
+    <script src="lib/js/bootstrap.min.js"></script>
+    <script src="lib/js/weixin.js"></script>
+    <script src="./loginout.js"></script>
+</head>
+
+<body style="background-color: #bbb7bb36;">
+    <div id="mask">
+        <div id="alter">
+            <div id="content">
+                文件上传成功
+            </div>
+            <span>确定</span>
+        </div>
+    </div>
+    <div class="container" style="width: 100%;">
+        <div class="row h-header">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <span class="backToIndex">知识管理分析系统</span>
+            </div>
+            <div class="col-lg-5 col-md-4 col-sm-4 col-xs-4 text-right" id="h-user">你好 | TPRI</div>
+            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 text-right" style="cursor: pointer;" id="login_out">退出</div>
+        </div>
+        <div class="row searchTop text-center messagePos">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-md-offset-2" style="background-color:#c7c1c18c;">
+                文档录入其他信息
+            </div>
+        </div>
+        <div class="row searchTop">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                <form class="bs-example bs-example-form text-center" role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon">文件名:</span>
+                        <input type="text" class="form-control text-center" placeholder="请输入文件名" id="file-name"
+                            onchange="getInformation('file-name')" readonly="readonly">
+                        <label class="input-group-btn">
+                            <input type="button" id="i-check" value="添加文件" class="btn btn-primary"
+                                onclick="$('#i-file').click()">
+                        </label>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">关键词:</span>
+                        <input type="text" class="form-control text-center" placeholder="请输入关键词" id="key-world"
+                            onchange="getInformation('key-world')">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">摘要:</span>
+                        <input type="text" class="form-control text-center" placeholder="请输入摘要" id="summary"
+                            onchange="getInformation('summary')">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">备用字段:</span>
+                        <input type="text" class="form-control text-center" placeholder="请输入备用字段" id="reserve"
+                            onchange="getInformation('reserve')">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-md-offset-2 search">
+                <span class="spn">
+                    选择专业
+                </span>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle selectPos" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" id="professionalSel">
+                        选择专业
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu professionalMenu">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search">
+                <span>
+                    文件类型
+                </span>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle selectPos" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" id="fileType">
+                        文件类型
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu typeMenu">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 search">
+                <span class="spn">
+                    选择文件夹
+                </span>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" id="selectFolder" style="margin-left: 5px;">
+                        选择文件夹
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu folderSec">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="row searchTop" style="display: none;">
+            <div class="form-group">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <input type="button" id="i-check" value="添加文件" class="btn btn-primary"
+                                onclick="$('#i-file').click()">
+                        </label>
+                        <input id='location' class="form-control" onclick="$('#i-file').click();">
+                    </div>
+                </div>
+                <input type="file" name="file" id='i-file' onchange="getUploadFileInfo()" style="display: none;">
+            </div>
+
+
+        </div>
+        <div class="row searchTop">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        新建文件夹
+                    </span>
+                    <input type="text" class="form-control text-center form-control-width" placeholder="文件夹的名称"
+                        id="createFolder" onchange="getInformation('createFolder')">
+                </div>
+            </div>
+        </div>
+        <div class="row searchTop">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-md-offset-2">
+                <div class="input-group">
+                    <span class="input-group-addon">文件存储的位置:</span>
+                    <input type="text" class="form-control text-center" placeholder="文件存储的位置" id="reserve2"
+                        style="color: black; font-size: 16px;" onchange="getInformation('reserve')" readonly="readonly">
+
+                </div>
+            </div>
+        </div>
+        <div class="row searchTop text-center">
+            <hr>
+            <button class="btn btn-primary" id="btn" onclick="postData()">上传文件</button>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    'use strict'
+    var _Cookie = document.cookie;
+    var ua = navigator.userAgent.toLocaleLowerCase()
+    if (ua.indexOf('micromessenger') > -1) {
+        // 在微信中
+    } else if (_Cookie.split(';')[0].split('=')[1] !== 'tpri') {
+        if (localStorage.getItem('userName') == 'tpri') {
+        } else {
+            location.href = './index.html';
+        }
+
+    }
+    $('.folderSec').css('display', 'none');
+    document.onclick = function (e) {
+        if ($('.folderSec').css("display") === "none" && e.target.id === "selectFolder") {
+            $('.folderSec').show();
+        } else {
+            $('.folderSec').hide();
+        }
+    }
+    $('.backToIndex').on('click', function () {
+        window.location.href = "./homePage.html";
+    })
+    $('#alter').on('click', function () {
+        $('#alter').css('height', 0)
+        $('#alter').hide(500);
+        $('#mask').hide(500);
+    })
+    var addInfomation = {
+        fileName: "",
+        keyWord: "",
+        summary: "",
+        professional: "",
+        folderName: "",
+        createFoldeName: "",
+        fileType: ""
+    }
+
+    function getInformation(inputId) {
+        switch (inputId) {
+            case 'file-name':
+                addInfomation.fileName = $("#file-name").val();
+                break;
+            case 'key-world':
+                addInfomation.keyWord = $("#key-world").val();
+                break;
+            case 'summary':
+                addInfomation.summary = $("#summary").val();
+                break;
+            case 'profess':
+                addInfomation.professional = $("#profess").val();
+                break;
+            case 'createFolder':
+                addInfomation.createFoldeName = $("#createFolder").val();
+                break;
+            case 'reserve':
+                addInfomation.reserve = $('#reserve').val();
+                break;
+            default:
+                break;
+        }
+    }
+    var folderPath;
+    var folderPathDisk;
+    $('#createFolder').blur(function () {
+        $('#reserve2').val('～/public/' + $(this).val());
+        folderPathDisk = $(this).val();
+    })
+
+    $(".folderSec").on('click', 'a', function (e) {
+        addInfomation.folderName = "";
+        addInfomation.folderName = e.target.innerHTML;
+        $("#selectFolder").html(e.target.innerHTML + "<span class='caret'></span>");
+    })
+    $('.typeMenu').on('click', 'a', function (e) {
+        addInfomation.fileType = "";
+        addInfomation.fileType = e.target.innerHTML;
+        $('#fileType').html(e.target.innerHTML + "<span class='caret'></span>");
+    })
+    $('.professionalMenu').on('click', 'a', function (e) {
+        addInfomation.professional = "";
+        addInfomation.professional = e.target.innerHTML;
+        $('#professionalSel').html(e.target.innerHTML + "<span class='caret'></span>");
+    })
+    //从后台数据库中请求到已有的文件夹 然后动态渲染到页面的select框中
+    function getFolder() {
+        for (var i = 0; i < 5; i++) {
+            $('.dropdown-menu').append('<li><a>' + i + '</a></li>')
+        }
+    }
+
+
+
+    function getFileType(url, type1, callback) {
+        commonAjax(url, type1, callback);
+    }
+    function getProfession(url, type1, callback) {
+        commonAjax(url, type1, callback);
+    }
+    function getFolderList(url, type1, callback) {
+        commonAjax(url, type1, callback);
+    }
+
+    function getDiskFolder(url, type1, callback) {
+        commonAjax(url, type1, callback);
+    }
+    function professionalBack(res) {
+        for (var i = 0; i < res.length; i++) {
+            var professionalName = res[i].profession_desc;
+            $('.professionalMenu').append('<li><a>' + professionalName + '</a></li>');
+        }
+    }
+    function fileTypeBack(res) {
+        for (var i = 0; i < res.length; i++) {
+            var resType = res[i].file_type;
+            $(".typeMenu").append('<li><a>' + resType + '</a></li>');
+        }
+    }
+    function filterFolder(arr, key) {
+        var newObj = {},
+            newArr = [];
+        for (var i = 0; i < arr.length; i++) {
+            var item = arr[i];
+            if (!newObj[item[key]]) {
+                newObj[item[key]] = newArr.push(item);
+            }
+        }
+        return newArr;
+    }
+    function init() {
+        getFileType('/fileType', 'get', fileTypeBack);
+        getProfession('/profession', 'get', professionalBack);
+        getDiskFolder('/diskFolder', 'get', diskFolderBack);
+        $('#fileType').html('.docx' + "<span class='caret'></span>");
+        $('#professionalSel').html('锅炉专业' + "<span class='caret'></span>");
+        addInfomation.fileType = '.docx';
+        addInfomation.professional = '锅炉专业';
+    }
+
+    function diskFolderBack(res) {
+        $('.folderSec').empty();
+        for (var i = 0; i < res.length; i++) {
+            var list = res[i];
+            $('.folderSec').append('<li><a onclick = "getNextLevel(this)" data-name = "' + list + '" style = "cursor: pointer">' + list + '</a></li>')
+        }
+    }
+    var levelFolderName;
+    function getNextLevel(levelFolder) {
+        window.event ? window.event.cancelBubble = true : e.stopPropagation();
+        levelFolderName = levelFolder.dataset.name;
+        var levelWid;
+        var levelNum;
+        var levelArr;
+        levelWid = '10px';
+        if (levelFolderName.indexOf('/') != -1) {
+            levelArr = levelFolderName.split('/');
+            levelNum = levelArr.length;
+            levelWid = levelNum * 15 + 'px';
+
+        }
+        folderPath = '～/public' + '/' + levelFolderName;
+        folderPathDisk = levelFolderName
+        $('.folderSec').css('display', 'block');
+        $('#reserve2').val(folderPath);
+        addInfomation.createFoldeName = folderPathDisk;
+        $.ajax({
+            type: 'get',
+            url: '/diskFolder',
+            data: {
+                t: new Date(),
+                name: levelFolderName
+            },
+            success: function (res) {
+                if (res) {
+                    $(levelFolder).children().remove();
+                    var backArr = [];
+                    var list;
+                    for (var key in res) {
+                        if (res[key].indexOf('.') == -1) {
+                            backArr.push(res[key]);
+                        }
+                    }
+                    if (levelNum >= 2) {
+                        for (var key in backArr) {
+                            list = backArr[key];
+                            $(levelFolder).append('<div><a onclick = "getNextLevel(this)" data-name = "' + levelFolderName + '/' + list + '" style = "margin-left:' + levelWid + '; ">' + list + '</div></a>')
+                        }
+                    } else {
+                        for (var key in backArr) {
+                            list = backArr[key];
+                            $(levelFolder).append('<div><a onclick = "getNextLevel(this)" data-name = "' + levelFolderName + '/' + list + '" style = "margin-left:' + levelWid + '">' + list + '</a></div>')
+                        }
+                    }
+                }
+            },
+            file: function () {
+                console.log('服务器错误');
+            }
+        })
+    }
+    init();
+    /**
+     * @description
+     * 公共的ajax方法 对jquery的ajax进行封装
+     * @params url: {string}
+     * @params type1: {ajaxType}
+     * type2: funType
+     * @params callback: {function}
+     * 
+    */
+    function commonAjax(url, type1, callback) {
+        $.ajax({
+            url: url,
+            type: type1,
+            data: {
+                t: new Date()
+            },
+            dataType: 'json',
+            success: function (res) {
+                callback(res);
+            },
+            fail: function (res) {
+                console.log("数据请求失败");
+            }
+        })
+    }
+    function getUploadFileInfo() {
+        $('#location').val($('#i-file').val());
+        console.log($('#i-file').val());
+        var fileValue = $('#i-file').val().replace(/\\/g, '/');
+        var fileSplit = fileValue.split('/');
+        addInfomation.fileName = fileSplit[fileSplit.length - 1].split('.')[0];
+        $('#file-name').val(addInfomation.fileName);
+    }
+    // post 接口往表 filemanagement 中插入数据
+    jQuery.support.cors = true;
+    function isFolderName() {
+        if (addInfomation.folderName != '' || addInfomation.createFoldeName != '') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function fileDetail() {
+        var file = document.getElementById('i-file');
+        var formData = new FormData();
+        var upload_file = file.files[0];
+        formData.append('file', upload_file);
+        formData.append('fileName', addInfomation.fileName);
+        formData.append('keyWorld', addInfomation.keyWord);
+        formData.append('summary', addInfomation.summary);
+        formData.append('professional', addInfomation.professional);
+        formData.append('folderName', addInfomation.folderName);
+        formData.append('createFolderName', addInfomation.createFoldeName);
+        formData.append('fileType', addInfomation.fileType);
+        formData.append('standbyInfo', addInfomation.reserve);
+        formData.append('userName', localStorage.getItem('userName'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', '/upload', true);
+        xhr.onreadystatechange = function (res) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                loading('文件上传成功');
+            }
+        }
+        xhr.send(formData);
+    }
+    function postData() {
+        if (isFolderName()) {
+            if (!addInfomation.fileName) {
+                loading('请上传文件')
+            } else {
+                fileDetail();
+            }
+        } else {
+            if (!addInfomation.fileName) {
+                loading('请上传文件')
+            } else {
+                loading('请创建文件夹或者选择已有的文件夹');
+            }
+        }
+
+    }
+    function loading(message) {
+        $('#alter').css('display', 'block');
+        $('#alter').animate({
+            height: '100px'
+        })
+        $('#mask').css('display', 'block');
+        $('#content').html(message);
+    }
+
+    function isLogin() {
+        var name = localStorage.getItem('userName');
+        if (name == 'null' || name == null || name == "") {
+            location.href = './index.html';
+        }
+
+    }
+    isLogin();
+    $('#h-user').html('你好 ' + '| ' + 'TPRI');
+
+    document.getElementById("login_out").addEventListener('click', function (e) {
+        localStorage.setItem('userName', '');
+        location.href = './index.html';
+    })
+</script>
+
+</html>
