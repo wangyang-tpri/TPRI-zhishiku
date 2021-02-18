@@ -433,6 +433,9 @@ function getDiskFolder(folderName) {
 function initTreeNode2(res) {
     var fileArr = [], folderArr = [];
     for (var key in res) {
+        if (res[key] == '红外图谱') {
+            continue
+        }
         if (res[key].indexOf('.') != -1) {
             fileArr.push(res[key]);
         } else {

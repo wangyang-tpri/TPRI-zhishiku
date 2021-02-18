@@ -310,6 +310,9 @@
         $('.folderSec').empty();
         for (var i = 0; i < res.length; i++) {
             var list = res[i];
+            if (list == '红外图谱') {
+                continue
+            }
             $('.folderSec').append('<li><a onclick = "getNextLevel(this)" data-name = "' + list + '" style = "cursor: pointer">' + list + '</a></li>')
         }
     }
