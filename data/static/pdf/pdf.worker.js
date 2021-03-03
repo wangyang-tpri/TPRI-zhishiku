@@ -41951,6 +41951,7 @@ var WorkerMessageHandler = {
     });
 
     handler.on('GetDocRequest', function wphSetupDoc(data) {
+      data.cMapUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.2.228/cmaps/';
       return WorkerMessageHandler.createDocumentHandler(data, port);
     });
   },
