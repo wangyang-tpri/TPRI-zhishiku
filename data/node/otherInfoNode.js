@@ -3,7 +3,7 @@ var CreatePool = require('./db');
 var CreatePool = new CreatePool();
 var pool = CreatePool.getPool();
 var path = require('path');
-const { get } = require('./redisModule');
+// const { get } = require('./redisModule');
 //读取磁盘上面对应的文件夹下面的文件  展示到前台
 function OtherInfo() {
     let titleFolder = {

@@ -147,12 +147,13 @@ function otherInfoBack(res, infoId) {
     if (res) {
         var processResult = processFileTypeAndDate(res[0], res[1]);
         var spaceName;
+        var fileName = res[0].split('.')[0];
         if (res[0].indexOf(' ') != -1) {
             res[0] = res[0].split(' ').join('***');
         }
         var filePath = "D:/public/" + titleFolder + '/' + res[0];
         html += '<tr><td>'
-        html += res[0].split('.')[0] + '</td><td>'
+        html += fileName + '</td><td>'
         html += processResult.type + '</td><td>'
         html += processResult.date + '</td>'
         html += '<td><button onclick = "priviewWorld($(this))" data-name = ' + filePath + '>预览</button></td>'

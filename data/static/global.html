@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>全文检索</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .search, .t-header {
+        width: 640px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .search_input {
+        width: 538px;
+        height: 36px;
+        border: 1px solid #4791ff;
+        float: left;
+        outline: none;
+    }
+
+    .search_btn {
+        width: 90px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        background: #3385ff;
+        color: #fff;
+        font-size: 15px;
+        float: right;
+        cursor: pointer;
+    }
+
+    p {
+        width: 780px;
+        display: block;
+        margin: 15px auto;
+        font-size: 13px;
+        color: #333;
+    }
+
+    .result {
+        font-size: 14px;
+        color: #999;
+        line-height: 30px;
+        width: 780px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .page {
+        list-style: none;
+        text-align: center;
+    }
+
+    .page li {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        border: 1px solid #e1e2e3;
+        cursor: pointer;
+        text-align: center;
+        line-height: 34px;
+        font-size: 12px;
+    }
+
+    .page li:hover {
+        background: #f2f8ff;
+        border: 1px solid #38f;
+    }
+
+    .page li.on {
+        font-weight: bold;
+        border: none;
+    }
+
+    .page .last {
+        width: 60px;
+    }
+
+    .page .next {
+        width: 60px;
+    }
+
+    .page .next:hover {
+        background: #f2f8ff;
+        border: 1px solid #38f;
+    }
+
+    .main {
+        float: right;
+    }
+
+    .content {
+        width: 780px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .title {
+        cursor: pointer;
+        color: blue;
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .title:hover {
+        text-decoration: underline;
+    }
+
+    .content-left {
+        padding-left: 5%;
+        margin-bottom: 10px;
+    }
+    .content-body {
+        width: 780px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .t-header>h1 {
+        color: red;
+        font-style: italic;
+        margin: 30px 0;
+        float: left;
+    }
+    .t-header {
+        padding-left: 230px;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <div class="t-header">
+            <h1>T P R I   </h1>
+            <h1 style="color: blue; font-style:normal; margin-left: 10px;">知识管理分析系统</h1>
+        </div>
+        <form name="searchForm">
+            <div class="search">
+                <div class="main">
+                    <button type="submit" @click.prevent="searchkey" class="search_btn" id="searchbtn">千度一下</button>
+                    <input type="text" v-model="keywords" value="" class="search_input">
+                </div>
+            </div>
+        </form>
+        <br />
+        <br />
+        <div>
+            <div align="center" style="margin-top: 130px;">
+                千度为您找到相关结果约
+                <font color="blue">{{result.rowCount}}</font>
+                个
+            </div>
+            <br />
+            <div v-for="(list, key) in result.list" class="content-body">
+                <a class="content title" v-html="list.fileName" @click="priviewFileContent(list.fileName, $event)"></a>
+                <a class="content content-left" v-html="list.content"></a>
+            </div>
+        </div>
+    </div>
+    <script src="./lib/js/vue.min.js"></script>
+    <script src="./lib/js/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                keywords: '',
+                result: Object
+            },
+            methods: {
+                searchkey() {
+                    var self = this;
+                    var keywords = self.keywords;
+                    axios.get('http://10.220.109.43:8080/search/' + keywords + "/1/20").then(function (res) {
+                        self.result = res.data;
+                    })
+                },
+                priviewFileContent(fileName, ev) {
+                    this.getFileType(fileName)
+                    // 文件存放的位置在D:/ElasticSearch/Target
+                },
+                getFileType(fileName) {
+                    var fileSource, fileType;
+                    fileType = fileName.split('.')[1];
+                    fileSource = 'd:/ElasticSearch/Target/' +  fileName;
+                    if (fileType === 'pdf'){
+                        localStorage.setItem('pdfPath', fileSource);
+                        window.open('./priviewPdf.html');
+                    } else if (fileType === 'doc' || fileType === 'docx'){
+                        window.open('./priviewWorld.html?filName=' + encodeURIComponent(fileSource))
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
