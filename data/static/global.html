@@ -160,7 +160,9 @@
             <br />
             <div v-for="(list, key) in result.list" class="content-body">
                 <a class="content title" v-html="list.fileName" @click="priviewFileContent(list.fileName, $event)"></a>
-                <a class="content content-left" v-html="list.content"></a>
+                <div v-for = "eachContent in list.content" style="text-align: left;">
+                    <a class="content content-left" v-html="eachContent"></a>
+                </div>
             </div>
         </div>
     </div>
@@ -178,6 +180,10 @@
                     var self = this;
                     var keywords = self.keywords;
                     axios.get('http://10.220.109.43:8080/search/' + keywords + "/1/20").then(function (res) {
+                        var list = res.data.list;
+                        for (var i = 0; i < res.data.list.length; i++) {
+                          res.data.list[i].content = res.data.list[i].content.split('...');
+                        }
                         self.result = res.data;
                     })
                 },
