@@ -38,7 +38,7 @@ function GetFileContents() {
         var isDirectory = req.query.isDirectory;
         var searchSql;
 
-        searchSql = "SELECT file_name, upload_time, file From filemanagement WHERE allInformation  LIKE " + '\'%' + keyWorld + '%\'';
+        searchSql = "SELECT file_name, upload_time, file From filemanagement WHERE standby_world2  LIKE " + '\'%' + keyWorld + '%\'';
 
         pool.getConnection((err, conn) => {
             conn.query(searchSql, (err, result, fields) => {

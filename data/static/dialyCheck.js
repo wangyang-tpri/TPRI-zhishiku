@@ -219,7 +219,7 @@ function priviewWorld(target) {
     }
     var priviewType;
     var dataPathLength = dataName.split('/').length;
-    priviewType = dataName.split('/')[dataPathLength - 1].split('.')[1];
+    priviewType = dataName.split('.')[dataPathLength - 1];
     if (priviewType == 'pdf') {
         localStorage.setItem('pdfPath', dataName);
         window.open('./priviewPdf.html');
@@ -227,7 +227,6 @@ function priviewWorld(target) {
         window.open('./priviewWorld.html?filName=' + encodeURIComponent(dataName))
     } else {
         window.open('./priviewVideo.html?fileName=' + encodeURIComponent(dataName));
-
     }
 }
 /**

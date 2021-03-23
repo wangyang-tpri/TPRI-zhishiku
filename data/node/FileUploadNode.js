@@ -139,7 +139,7 @@ function GetUpload() {
             msg: '文件上传成功'
         });
         insertSql = "INSERT INTO filemanagement (" +
-            "file_name, key_world, summary, professional, floder_name, create_floder, file, user_name, file_type, allInformation" +
+            "file_name, key_world, summary, professional, floder_name, create_floder, file, user_name, file_type, standby_world2" +
             ") VALUES (" + '\'' + fileName + '\'' + ',' + '\'' + keyword + '\'' + ',' + '\'' + summary + '\'' + ',' + professionId + ',' + '\'' + folderName + '\'' + ',' + '\'' + createDataBaseFolderName + '\'' + ',' + '\'' + file + '\'' + ',' + '\'' + userName + '\'' + ',' + fileId + ',' + '\''+ allInfo + '\''+ ")";
         insertToFilemanagement(insertSql);
     }
