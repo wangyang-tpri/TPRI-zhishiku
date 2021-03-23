@@ -1,5 +1,7 @@
 # 忽略git提交的一个文件 配置后 代码不会在提交
-
+# package-lock.json就是锁定安装时的包的版本号，并且需要上传到git
+# 以保证其他人在npm install 时大家的依赖一致
+# 根据官方文档 package-lock.json就是在npm install时生成的一份记录安装包的版本号和具体来源的
 
 .DS_Store
 # node_modules/
