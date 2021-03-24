@@ -693,7 +693,7 @@ function priviewWorld(target) {
     }
     var priviewType;
     var dataPathLength = dataName.split('.').length;
-    priviewType = data.split('.')[dataPathLength - 1]
+    priviewType = dataName.split('.')[dataPathLength - 1]
     if (priviewType == 'pdf') {
         localStorage.setItem('pdfPath', dataName);
         window.open('./priviewPdf.html');

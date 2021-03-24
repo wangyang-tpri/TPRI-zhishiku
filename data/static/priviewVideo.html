@@ -34,12 +34,14 @@
     </video>
     <script>
         var locationSearch = window.location.search.split('=');
+        var initHeight;
         var filePath = locationSearch[1];
         var client_height = window.screen.availHeight || document.body.clientHeight;
         var example_video_1_ele = document.getElementById('example_video_1');
+        
         document.getElementById('s-priview').src = '/priviewVideo?filePath=' + filePath;
         example_video_1_ele.style.width = '100%';
-        example_video_1_ele.style.height = client_height - 120 + 'px';
+        initHeight = example_video_1_ele.style.height = client_height - 120 + 'px';
         var myVideo = videojs("example_video_1");
         myVideo.ready(function () {
             this.play();
@@ -52,6 +54,13 @@
         example_video_1_ele.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         })
+        function changeVideoHeight(){
+            var screenHeight = window.screen.height + 'px';
+            var videoHeight = example_video_1_ele.style.height;
+            (videoHeight < screenHeight) ? example_video_1_ele.style.height = screenHeight : (example_video_1_ele.style.height = initHeight);
+        }
+        var fullScreenEle = document.getElementsByClassName('vjs-fullscreen-control')[0];   
+        fullScreenEle.addEventListener('click', changeVideoHeight)
     </script>
 </body>
 
