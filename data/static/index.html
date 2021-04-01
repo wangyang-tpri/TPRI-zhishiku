@@ -6,12 +6,16 @@
     <title>login</title>
     <link rel="stylesheet" href="lib/css/bootstrap.css">
     <link rel="stylesheet" href="lib/css/knowledge.css">
+    <link rel="stylesheet" href="lib/css/drag.css">
     <script src="lib/js/jquery-3.2.1.js"></script>
     <script src="./lib/js/weixin.js"></script>
 </head>
 <body style="background-color: #ddd;" class="backImage">
     <!-- 登录页 -->
     <!-- 头部 -->
+    <div id="mask">
+        <div id="jigsaw"></div>
+    </div>
     <div class="container" style="width: 100%;">
         <div class="row" id="l-header">
             <div>
@@ -36,13 +40,14 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-default col-md-offset-10 col-md-2 col-xs-2" id="login">登录</button>
+                <button class="btn btn-default col-md-offset-10 col-md-2 col-xs-2" id="login" disabled="true">登录</button>
             </div>
         </div>
         <div class="row" id="l-footer">
             <div>西安热工研究院有限公司 ©2020</div>
         </div>
     </div>
+    <script src="./slider.js"></script>
     <script src="./login.js"></script>
 </body>
 </html>
