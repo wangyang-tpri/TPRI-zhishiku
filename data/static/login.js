@@ -8,6 +8,9 @@ var loginBut;
 loginBut = document.getElementById('login');
 nameEle = document.getElementById('inputName');
 passwordEle = document.getElementById('inputPassword');
+nameEle.onblur = function(){
+    userName && loginBut.removeAttribute('disabled')
+}
 function getLoginUserInfo(ele) {
     switch (ele) {
         case ele = 'inputName':
@@ -46,13 +49,15 @@ function login() {
     }
 }
 loginBut.onclick = function () {
+    eleBlock('mask')
+    eleBlock('jigsaw')
     password = passwordEle.value;
-    login()
 };
 document.onkeydown = function (e) {
     if (e.keyCode == 13) {
         password = passwordEle.value;
-        login();
+        eleBlock('mask')
+        eleBlock('jigsaw')
     }
 }
 var searchName;
@@ -101,3 +106,15 @@ function isWeixin() {
 setTimeout(function () {
     isWeixin();
 }, 0)
+
+/**
+ * @description 登录时添加拖动图片进行进一步的人工验证的功能
+ */
+var dragContainer = document.getElementById('jigsaw')
+drawImage.init({
+    el: dragContainer,
+    onsuccess: login
+})
+function eleBlock(eleStr) {
+    document.getElementById(eleStr).style.display = 'block'
+}

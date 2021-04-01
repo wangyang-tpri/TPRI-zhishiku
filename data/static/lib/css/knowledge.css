@@ -292,10 +292,10 @@ div#mask {
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
     display: none;
-    margin-top: -20px;
+    /* margin-top: -20px; */
 }
 
-div#alter {
+div#alter, div#jigsaw {
     width: 300px;
     height: 0;
     position: absolute;
@@ -309,6 +309,11 @@ div#alter {
     border-radius: 3px;
     display: block;
 
+}
+div#jigsaw {
+    height: 200px;
+    width: 310px;
+    display: none;
 }
 
 div#alter span {
