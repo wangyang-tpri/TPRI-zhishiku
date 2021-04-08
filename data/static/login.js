@@ -46,6 +46,7 @@ function login() {
         location.href = location.protocol + '//' + location.host + '/homePage.html';
     } else {
         alert('用户名或密码输入错误');
+        location.reload()
     }
 }
 loginBut.onclick = function () {
