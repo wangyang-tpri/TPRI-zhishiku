@@ -47,7 +47,7 @@
         return image
     }
     function getRoundImage() {
-        return "https://picsum.photos/300/150/?image=" + getRoundNumber(0, 1084)
+        return "./lib/image/drag_" + getRoundNumber ( 1, 18 ) + '.jpg'
     }
     function createElement(tarName, className) {
         var ele = document.createElement(tarName)
