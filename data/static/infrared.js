@@ -17,6 +17,7 @@ var makeTable = {
         this.commonUrl(path, img)
         // 点击图片可以进行放大
         // 会有一个600 * 400的一个区域放大的位置
+        img.style.display = 'none'
         $('#enlarge').css('display', 'block')
         img.style.width = 600 + 'px'
         img.style.height = 400 + 'px'
@@ -25,6 +26,7 @@ var makeTable = {
         img.style.left = '50%'
         img.style.marginTop = '-200px'
         img.style.marginLeft = '-300px'
+        img.style.display = 'block'
         $('#enlarge').append(img)
     },
     getImageUrl: function (imagePath, key) {
