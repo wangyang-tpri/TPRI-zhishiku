@@ -112,9 +112,13 @@ setTimeout(function () {
  * @description 登录时添加拖动图片进行进一步的人工验证的功能
  */
 var dragContainer = document.getElementById('jigsaw')
+function failCallBack (){
+    location.reload()
+}
 drawImage.init({
     el: dragContainer,
-    onsuccess: login
+    onsuccess: login,
+    onfail: failCallBack
 })
 function eleBlock(eleStr) {
     document.getElementById(eleStr).style.display = 'block'

@@ -25,6 +25,7 @@
         this.width = 310;
         this.el = opts.el;
         this.onSuccess = opts.onsuccess
+        this.onFail = opts.onfail
         this.l = 42;
         this.r = 9;
         this.PI = Math.PI;
@@ -209,15 +210,14 @@
                       typeof self.onSuccess === 'function' && self.onSuccess()
                     } else {
                       addClass(self.sliderContainer, 'sliderContainer_fail')
-                      self.text.innerHTML = '再试一次'
-                      self.reset()
+                      typeof self.onFail === 'function' && self.onFail()
                     }
                   } else {
                     addClass(self.sliderContainer, 'sliderContainer_fail')
-                    typeof this.onFail === 'function' && this.onFail()
+                    self.text.innerHTML = '滑块位置拖动不正确'
                     setTimeout(function(){
-                        self.reset()
-                    }, 1000)
+                        typeof self.onFail === 'function' && self.onFail()
+                    }, 500)
                   }
             }
             self.slider.addEventListener('mousedown', handleStart)
