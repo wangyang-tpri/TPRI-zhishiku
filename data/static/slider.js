@@ -176,6 +176,7 @@
              */
             var judgeDistance = function (move_x, move_y) {
                 if (move_x < 0 || (move_x + 38) >= self.width) return false
+                console.log(move_x)
                 self.block.style.left = move_x + 'px'
                 self.slider.style.left = move_x + 'px'
                 var blockLeft = (self.width - 40 -20) / (self.width - 40) * move_x;
@@ -221,10 +222,10 @@
                   }
             }
             self.slider.addEventListener('mousedown', handleStart)
-            self.slider.addEventListener('mouseover', handleMove)
+            document.addEventListener('mouseover', handleMove)
             document.addEventListener('mouseup', handleOver)
             self.slider.addEventListener('touchstart', handleStart)
-            self.slider.addEventListener('touchmove', handleMove)
+            document.addEventListener('touchmove', handleMove)
             document.addEventListener('touchend', handleOver)
         },
         draw: function () {
