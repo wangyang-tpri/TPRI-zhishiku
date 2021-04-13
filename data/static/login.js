@@ -57,8 +57,11 @@ loginBut.onclick = function () {
 document.onkeydown = function (e) {
     if (e.keyCode == 13) {
         password = passwordEle.value;
-        eleBlock('mask')
-        eleBlock('jigsaw')
+        if (password && userName){
+            eleBlock('mask')
+            eleBlock('jigsaw')
+        }
+        
     }
 }
 var searchName;

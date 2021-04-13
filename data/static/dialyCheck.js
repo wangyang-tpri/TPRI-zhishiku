@@ -15,7 +15,8 @@ $('#leftItem').css('height', leftMenuHeight);
 hightLightItem(search);
 whichMethodCall(search);
 function hightLightItem(number) {
-    $('ul li:nth-child(' + number + ')').addClass('activeItem');
+    
+    number && $('ul li:nth-child(' + number + ')').addClass('activeItem');
     $('ul span').addClass('spanItem');
 }
 $('ul').on('click', 'li', function (e) {
@@ -282,3 +283,32 @@ document.getElementById('enlarge').onmousewheel = function (e) {
     img.style.height = iHeight + 'px'
 }
 
+// 制作面包屑导航
+// pageArr是一个对象数组 里面保存的是当前页面和上一层级的页面信息
+function breadcrumb (pageArr){
+    var html2 = '', a ;
+    html2 += '<div>'
+    for (var key in pageArr) {
+        a = document.createElement('a')
+        a.setAttribute('href', pageArr[key].href)
+        a.innerHTML = pageArr[key].title + '>'
+        html2 += '<a href = "' + pageArr[key].href +'" >' + pageArr[key].title +'</a>' + '   >'
+    }
+    html2 += '</div>'
+    var cotai = document.getElementsByClassName('container')
+    console.log(cotai[0])
+    cotai[0].append(a)  // html2成为了一个text，文本内容了
+    $('.container').append(html2)
+}
+
+breadcrumb([
+    {
+    title: '首页',
+    href: './homePage.html'
+}
+,
+{
+    title: '文件夹详情页面',
+    href: 'javascript: void(0)'
+}
+])
