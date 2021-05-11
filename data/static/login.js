@@ -1,10 +1,12 @@
 var centerMiddle = document.getElementById("l-center");
 var h_screen = window.screen.availHeight || document.body.clientHeight;
+var dragContainer = document.getElementById('jigsaw')
 var userName;
 var password;
 var nameEle;
 var passwordEle;
 var loginBut;
+var startValidation = false;
 loginBut = document.getElementById('login');
 nameEle = document.getElementById('inputName');
 passwordEle = document.getElementById('inputPassword');
@@ -38,16 +40,13 @@ function postUser(userName) {
     })
 }
 function login() {
-    if ((userName === 'tpri' && password === 'tpri123') || getUrlParams()) {
+    if (startValidation || getUrlParams()) {
         nameEle.value = '';
         passwordEle.value = '';
         postUser(userName);
         localStorage.setItem('userName', 'tpri');
         location.href = location.protocol + '//' + location.host + '/homePage.html';
-    } else {
-        alert('用户名或密码输入错误');
-        location.reload()
-    }
+    } 
 }
 loginBut.onclick = function () {
     eleBlock('mask')
@@ -71,14 +70,15 @@ var searchName;
  * 同时满足 user=tpri 和 hostname=redc.smart01.cn 则直接让登录
  */
 http://106.53.233.188:4000/index.html?user=tpri&xdm_e=http://redc.smart01.cn:8080&xdm_c=default3777&xdm_p=1
-// alert(location)
 function getUrlParams() {
     var isLogin = false;
     if (decodeURIComponent(location.search)) {
         var searchParams = decodeURIComponent(location.search).split('?')[1].split('&');
-        if (searchParams[1].indexOf('=') > 0) {
-            var searchHostName = searchParams[1].split('=')[1].split('//')[1].split(':')[0];
-        }
+        if (searchParams[1]){
+            if (searchParams[1].indexOf('=') > 0) {
+                var searchHostName = searchParams[1].split('=')[1].split('//')[1].split(':')[0];
+            }
+        } 
         var jumpHost = "redc.smart01.cn";
         searchName = searchParams[0].split('=')[1];
         if (searchName == 'tpri' && searchHostName == jumpHost) {
@@ -114,15 +114,37 @@ setTimeout(function () {
 /**
  * @description 登录时添加拖动图片进行进一步的人工验证的功能
  */
-var dragContainer = document.getElementById('jigsaw')
+
 function failCallBack (){
     location.reload()
 }
 drawImage.init({
     el: dragContainer,
-    onsuccess: login,
+    onsuccess: verifyUserName,
     onfail: failCallBack
 })
 function eleBlock(eleStr) {
     document.getElementById(eleStr).style.display = 'block'
+}
+
+function verifyUserName(){
+    $.ajax({
+        url: '/userInfo',
+        type: 'post',
+        data: {
+            userName: userName,
+            password: password
+        },
+        success: function(req) {
+            if ( req.login ) {
+                startValidation = true;
+                login()
+            } else {
+                alert('用户名或密码输入错误');
+                location.reload()
+            }
+        },
+        fail: function(){
+        }        
+    })
 }

@@ -302,7 +302,10 @@ app.get('/downloadimage', (req, res) => {
 app.get('/showImage', (req, res) => {
     getFileContent.showImage(req, res);
 })
-
+app.post('/userInfo', (req, res) => {
+    // 获取用户名和密码
+    otherInfo.getUserInfo(req, res)
+})
 app.listen(4000);
 
 

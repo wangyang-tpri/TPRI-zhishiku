@@ -113,6 +113,28 @@ function OtherInfo() {
             'ok'
         )
     }
+    this.getUserInfo = (req, res) => {
+        var uName = req.body.userName;
+        var uPassword = req.body.password;
+        var validateUser = "SELECT user_passworld FROM user_info WHERE user_name =" + '\'' + uName + '\'';
+        pool.getConnection((err, conn) => {
+            conn.query(validateUser, (err, result, fields) => {
+                if (err) throw err;
+                if (result.length != 0) {
+                    if (uPassword == result[0].user_passworld) {
+                        res.send({
+                            login: true
+                        })
+                    } else {
+                        res.send({
+                            login: false
+                        })
+                    }
+                }
+            })
+            conn.release()
+        })
+    }
 }
 
 module.exports = OtherInfo;
